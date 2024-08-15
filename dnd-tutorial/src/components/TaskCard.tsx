@@ -1,14 +1,15 @@
 import { useState } from "react";
 import TrashIcon from "../icons/TrashIcon";
-import { Task } from "../types";
+import { Id, Task } from "../types";
 
 interface Props {
   task: Task;
+  deleteTask: (id: Id) => void;
 }
 
 function TaskCard(props: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
-  const { task } = props;
+  const { task, deleteTask } = props;
   return (
     <div
       onMouseEnter={() => {
@@ -17,11 +18,16 @@ function TaskCard(props: Props) {
       onMouseLeave={() => {
         setMouseIsOver(false);
       }}
-      className="bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:right-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
+      className="bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
     >
       {task.content}
       {mouseIsOver && (
-        <button className="stroke-white absolute right-4 top-1/2 -translate-y-1/2 bg-columnBackgroundColor p-2 rounded">
+        <button
+          onClick={() => {
+            deleteTask(task.id);
+          }}
+          className="stroke-white absolute right-4 top-1/2 -translate-y-1/2 bg-columnBackgroundColor p-2 rounded opacity-60 hover:opacity-100"
+        >
           <TrashIcon />
         </button>
       )}
